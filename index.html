@@ -1,0 +1,536 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Guia de abordagem em seguros e consulta da carteira de clientes por funcional.">
+  <meta name="referrer" content="no-referrer">
+  <title>Personnalité · Conversas que protegem</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23192338'/%3E%3Cpath d='M10 24V8h7a5 5 0 0 1 0 10h-7m0-3h7a2 2 0 0 0 0-4h-4v13' fill='%23d5b08a'/%3E%3C/svg%3E">
+  <style>
+    :root { --navy:#192338; --navy-light:#25334b; --copper:#aa7750; --copper-light:#e3c9ad; --ink:#202b3b; --muted:#636a73; --line:#e2e4e7; --paper:#fff; --bg:#f6f6f5; --soft:#f2ebe4; --error:#a62d28; --radius:8px; }
+    * { box-sizing:border-box; }
+    [hidden] { display:none!important; }
+    body { margin:0; color:var(--ink); background:var(--bg); font-family:"Segoe UI",Arial,sans-serif; font-size:16px; line-height:1.5; -webkit-font-smoothing:antialiased; }
+    button,input,select { font:inherit; }
+    button,a,input,select { -webkit-tap-highlight-color:transparent; }
+    button { cursor:pointer; }
+    button:disabled { cursor:default; opacity:.45; }
+    button,a { touch-action:manipulation; }
+    a { color:inherit; }
+    :focus-visible { outline:3px solid #a57544; outline-offset:4px; }
+    input:focus-visible,select:focus-visible { outline-offset:1px; }
+    svg { width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; flex-shrink:0; }
+    .skip { position:fixed; top:-100px; left:16px; z-index:20; padding:10px 18px; background:white; }
+    .skip:focus { top:10px; }
+    .shell { max-width:1240px; margin:0 auto; padding:0 48px; }
+    .masthead { background:var(--navy); color:white; border-top:3px solid var(--copper); }
+    .masthead-inner { height:100px; display:flex; align-items:center; justify-content:space-between; gap:24px; }
+    .brand { display:flex; align-items:center; gap:18px; text-decoration:none; }
+    .itau { font-weight:750; font-size:29px; letter-spacing:-1.6px; border-right:1px solid #586171; padding-right:20px; line-height:36px; }
+    .personnalite { font-size:24px; font-weight:300; letter-spacing:.03em; }
+    .workspace-label { display:flex; gap:11px; align-items:center; color:#d0d6df; font-size:14px; }
+    .workspace-label svg { color:var(--copper-light); }
+    .navigation { background:white; border-bottom:1px solid var(--line); }
+    .nav-inner { display:flex; align-items:stretch; justify-content:space-between; gap:20px; min-height:69px; }
+    .nav-links { display:flex; gap:34px; }
+    .nav-link { display:flex; align-items:center; gap:10px; position:relative; text-decoration:none; font-size:15px; color:var(--muted); padding:21px 0; }
+    .nav-link[aria-current="page"] { color:var(--navy); font-weight:600; }
+    .nav-link[aria-current="page"]::after { content:""; height:3px; background:var(--copper); position:absolute; bottom:-1px; left:0; right:0; }
+    .base-control { display:flex; align-items:center; gap:14px; }
+    .base-status { font-size:13px; color:var(--muted); max-width:220px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .base-button { background:transparent; border:1px solid var(--line); border-radius:5px; padding:7px 12px; display:inline-flex; align-items:center; gap:8px; font-size:14px; color:var(--ink); }
+    .base-button:hover { background:var(--bg); border-color:#b0b5bd; }
+    main { min-height:calc(100vh - 259px); padding-top:46px!important; padding-bottom:64px!important; }
+    .eyebrow { color:#806042; font-size:12px; font-weight:650; letter-spacing:.14em; text-transform:uppercase; margin:0 0 9px; }
+    h1 { font-weight:400; font-size:36px; line-height:1.2; letter-spacing:-1.1px; margin:0; }
+    .intro { color:var(--muted); margin:12px 0 0; }
+    .page-heading { display:flex; align-items:center; justify-content:space-between; gap:24px; margin-bottom:34px; }
+    .draft { color:#826248; background:#ede5dc; border:1px solid #e2d7ca; border-radius:4px; font-size:12px; padding:5px 9px; white-space:nowrap; }
+    .modalities { display:flex; gap:8px; flex-wrap:wrap; margin:0 0 26px; }
+    .modality { padding:10px 22px; border:1px solid #d9dce0; background:transparent; color:#646a74; border-radius:5px; font-size:13px; font-weight:600; letter-spacing:.06em; min-height:44px; transition:background .15s; }
+    .modality:hover { background:#eceeed; }
+    .modality[aria-pressed="true"] { color:white; background:var(--navy); border-color:var(--navy); }
+    .guide { display:grid; grid-template-columns:minmax(0,1fr) 315px; background:white; border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; }
+    .guide-main { padding:34px 36px 30px; }
+    .guide-head { display:flex; gap:22px; align-items:flex-start; justify-content:space-between; }
+    .guide-code { color:var(--copper); font-size:12px; letter-spacing:.15em; font-weight:700; margin:0 0 6px; }
+    h2 { font-size:26px; font-weight:400; letter-spacing:-.5px; line-height:1.3; margin:0; }
+    .guide-summary { margin:10px 0 26px; color:var(--muted); max-width:570px; font-size:15px; }
+    .section-label { font-size:12px; text-transform:uppercase; letter-spacing:.11em; color:#737980; font-weight:600; margin:0 0 14px; }
+    .opening { border-left:2px solid var(--copper); padding:0 0 0 22px; margin:0 0 24px; font-size:21px; line-height:1.65; font-weight:350; letter-spacing:-.2px; }
+    .copy-button { display:inline-flex; align-items:center; gap:8px; color:#7e5737; font-size:14px; font-weight:600; background:none; border:0; padding:7px 0; }
+    .copy-button:hover { color:var(--navy); }
+    .guide-aside { padding:34px 28px; background:#f3f3f1; border-left:1px solid var(--line); }
+    .aside-title { display:flex; align-items:center; gap:9px; margin-bottom:23px; font-size:15px; font-weight:600; }
+    .aside-title svg { color:var(--copper); }
+    .questions { margin:0; padding:0; list-style:none; counter-reset:questions; }
+    .questions li { counter-increment:questions; display:flex; align-items:flex-start; gap:13px; margin-bottom:21px; font-size:15px; line-height:1.6; }
+    .questions li::before { content:"0" counter(questions); color:#9b7b5a; font-size:12px; padding-top:3px; }
+    .guide-bottom { display:grid; grid-template-columns:1fr 1fr; column-gap:36px; margin-top:31px; padding-top:25px; border-top:1px solid var(--line); }
+    .guide-bottom h3 { margin:0 0 8px; font-size:15px; font-weight:600; }
+    .guide-bottom p { color:var(--muted); font-size:14px; margin:0; line-height:1.65; }
+    .next-step { margin:24px 0 0; padding:20px 0 0; border-top:1px solid var(--line); }
+    .next-step p { margin:0 0 5px; color:var(--muted); font-size:14px; }
+    .text-link { display:inline-flex; align-items:center; gap:10px; text-decoration:none; font-size:14px; font-weight:600; }
+    .text-link:hover { text-decoration:underline; text-underline-offset:4px; }
+    .guide-footnote { margin:19px 0 0; display:flex; align-items:flex-start; gap:9px; color:var(--muted); font-size:13px; }
+    .guide-footnote svg { width:17px; height:17px; margin-top:2px; }
+    .primary { background:var(--navy); color:white; border:1px solid var(--navy); padding:12px 22px; border-radius:5px; font-weight:600; font-size:15px; display:inline-flex; justify-content:center; align-items:center; gap:13px; min-height:48px; }
+    .primary:hover { background:var(--navy-light); }
+    .secondary { background:white; border:1px solid #cdd1d6; color:var(--ink); padding:10px 17px; border-radius:5px; font-size:14px; }
+    .secondary:hover { background:var(--bg); }
+    .access { border-top:1px solid var(--line); padding:34px 0; display:grid; grid-template-columns:minmax(260px,390px) 1fr; column-gap:90px; align-items:start; }
+    .field-label { display:block; margin-bottom:9px; font-size:14px; font-weight:600; }
+    input,select { border:1px solid #c8ccd2; border-radius:5px; min-height:48px; background:white; color:var(--ink); padding:11px 14px; max-width:100%; }
+    input::placeholder { color:#81858c; }
+    .functional-form { display:flex; gap:12px; align-items:stretch; flex-wrap:wrap; }
+    .functional-form input { min-width:120px; flex:1; width:150px; }
+    .field-help { font-size:13px; color:var(--muted); margin:9px 0 0; }
+    .error { font-size:14px; color:var(--error); margin:10px 0 0; }
+    .access-side { border-left:1px solid var(--line); padding:0 0 0 34px; }
+    .access-side h2 { font-size:22px; margin:0 0 9px; }
+    .access-side p { font-size:15px; color:var(--muted); margin:0 0 17px; max-width:370px; }
+    .empty { text-align:center; padding:50px 24px; border-top:1px solid var(--line); }
+    .empty svg { width:38px; height:38px; color:#a18a70; margin-bottom:14px; stroke-width:1.1; }
+    .empty h2 { font-size:21px; }
+    .empty p { color:var(--muted); font-size:14px; max-width:430px; margin:10px auto 20px; }
+    .portfolio-heading { display:flex; align-items:center; justify-content:space-between; gap:20px; padding-top:26px; border-top:1px solid var(--line); margin-bottom:23px; }
+    .portfolio-heading h2 { font-size:22px; }
+    .portfolio-count { color:var(--muted); font-size:14px; margin:5px 0 0; }
+    .filter-row { display:flex; gap:16px; margin-bottom:21px; align-items:flex-end; }
+    .filter-search { flex:1; position:relative; }
+    .filter-search input { width:100%; padding-left:42px; }
+    .filter-search svg { position:absolute; left:14px; bottom:14px; color:var(--muted); }
+    .filter-select { width:220px; }
+    .filter-select select { width:100%; }
+    .table-wrap { overflow:auto; background:white; border:1px solid var(--line); border-radius:6px; }
+    table { border-collapse:collapse; width:100%; text-align:left; font-size:14px; }
+    th { background:#eeefed; font-size:12px; font-weight:600; color:#606772; letter-spacing:.06em; text-transform:uppercase; padding:15px 20px; }
+    td { padding:17px 20px; border-top:1px solid #eceeef; vertical-align:middle; }
+    tbody tr:hover { background:#fcfaf7; }
+    td:first-child { font-weight:600; min-width:180px; }
+    .cpf { white-space:nowrap; font-variant-numeric:tabular-nums; }
+    .modality-label { font-size:12px; letter-spacing:.04em; border:1px solid #dcd6ce; border-radius:3px; padding:4px 8px; display:inline-block; color:#796148; white-space:nowrap; }
+    .contact-cell { max-width:220px; overflow-wrap:anywhere; color:var(--muted); }
+    .row-action { background:none; color:var(--navy); border:0; display:flex; align-items:center; gap:8px; font-size:14px; white-space:nowrap; padding:8px 0; }
+    .row-action:hover { text-decoration:underline; }
+    .pagination { display:flex; justify-content:space-between; align-items:center; gap:20px; margin-top:18px; color:var(--muted); font-size:13px; }
+    .pagination-controls { display:flex; gap:8px; }
+    .pagination-controls button { padding:8px 12px; min-height:40px; }
+    .footer { border-top:1px solid var(--line); color:#7b8087; font-size:12px; }
+    .footer-inner { min-height:84px; display:flex; justify-content:space-between; align-items:center; gap:24px; }
+    .footer strong { color:#6a717c; font-weight:500; letter-spacing:.06em; }
+    .toast { position:fixed; left:50%; bottom:24px; transform:translateX(-50%); background:var(--navy); color:white; border-radius:6px; padding:13px 22px; box-shadow:0 6px 25px #17223720; z-index:30; width:max-content; max-width:calc(100% - 32px); font-size:14px; }
+    dialog { margin:auto; padding:0; border:1px solid var(--line); border-radius:10px; width:min(680px,calc(100% - 32px)); max-height:85vh; color:var(--ink); background:white; box-shadow:0 25px 100px #0003; }
+    dialog::backdrop { background:#15203480; }
+    .dialog-head { display:flex; align-items:flex-start; justify-content:space-between; gap:20px; padding:28px 30px 23px; border-bottom:1px solid var(--line); }
+    .dialog-head h2 { overflow-wrap:anywhere; font-size:24px; }
+    .dialog-close { background:transparent; border:0; color:var(--muted); display:flex; padding:7px; border-radius:5px; }
+    .dialog-close:hover { background:var(--bg); }
+    .dialog-body { padding:25px 30px 30px; }
+    .client-fields { display:grid; grid-template-columns:1fr 1fr; gap:22px 30px; margin:0; }
+    .client-fields div { min-width:0; }
+    .client-fields dt { color:var(--muted); font-size:13px; margin-bottom:5px; }
+    .client-fields dd { margin:0; font-size:15px; overflow-wrap:anywhere; white-space:pre-wrap; }
+    .detail-actions { margin-top:30px; border-top:1px solid var(--line); padding-top:24px; }
+    .load-notice { margin:0 0 16px; font-size:14px; color:var(--muted); }
+    .base-error { border-left:3px solid var(--error); padding:12px 16px; background:#fff4f1; color:var(--error); font-size:14px; margin:0 0 25px; }
+    .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+    @media(min-width:1500px) { main { padding-top:60px!important; } .page-heading { margin-bottom:42px; } .guide-main { padding:40px; } .guide-aside { padding:40px 30px; } }
+    @media(max-width:1000px) { .shell { padding-left:28px; padding-right:28px; } .base-status { display:none; } .guide { grid-template-columns:minmax(0,1fr) 270px; } .guide-main { padding:28px; } .guide-aside { padding:28px 24px; } .opening { font-size:19px; } .access { column-gap:40px; } .modality { padding-left:18px; padding-right:18px; } }
+    @media(max-width:760px) { .shell { padding-left:20px; padding-right:20px; } .masthead-inner { height:83px; } .workspace-label { display:none; } .personnalite { font-size:22px; } .itau { font-size:27px; } .nav-inner { flex-wrap:wrap; gap:0; } .nav-links { gap:25px; } .nav-link { font-size:14px; padding:19px 0; } .base-control { margin-left:auto; padding-left:16px; } .base-button { font-size:0; gap:0; padding:8px; } .base-button svg { width:21px; height:21px; } main { padding-top:30px!important; padding-bottom:40px!important; } h1 { font-size:29px; } .intro { font-size:15px; max-width:420px; } .page-heading { align-items:flex-start; margin-bottom:26px; } .draft { margin-top:4px; } .guide { grid-template-columns:1fr; } .guide-aside { border-left:0; border-top:1px solid var(--line); } .guide-main { padding:26px 24px; } .guide-bottom { gap:24px; } .modality { flex:1; min-width:calc(33.33% - 8px); padding:10px 12px; } .guide-summary { margin-bottom:25px; } .questions li { margin-bottom:15px; } .access { grid-template-columns:1fr; gap:30px; padding:27px 0; } .access-side { border-left:0; border-top:1px solid var(--line); padding:25px 0 0; } .access-side p { max-width:none; } .filter-row { flex-wrap:wrap; } .filter-search { flex-basis:100%; } .filter-select { width:100%; } .footer-inner { min-height:80px; gap:10px; flex-wrap:wrap; padding-top:18px; padding-bottom:18px; } .footer-inner span { width:100%; } }
+    @media(max-width:430px) { .page-heading { flex-wrap:wrap; gap:15px; } .guide-bottom { grid-template-columns:1fr; gap:20px; } .nav-links { gap:20px; } .nav-link { gap:7px; } .nav-link svg { width:17px; height:17px; } .base-control { padding-left:10px; } .client-fields { grid-template-columns:1fr; } .dialog-head,.dialog-body { padding:22px; } .pagination { flex-wrap:wrap; } }
+    @media(prefers-reduced-motion:reduce) { * { transition:none!important; scroll-behavior:auto!important; } }
+    @media print { .masthead,.navigation,.footer,.copy-button,.guide-footnote,.next-step,.modalities,.base-error { display:none!important; } body { background:white; } .shell { max-width:none; padding:0; } main { padding:0!important; } .guide { break-inside:avoid; } }
+  </style>
+</head>
+<body>
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="i-guide" viewBox="0 0 24 24"><path d="M12 6c-3-2-7-2-9-1v14c3-1 6-1 9 1 3-2 6-2 9-1V5c-2-1-6-1-9 1Zm0 0v14"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20v-2a6 6 0 0 1 12 0v2M16 5a3 3 0 0 1 0 6m2 3a5 5 0 0 1 3 4v2"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V3m-5 5 5-5 5 5M4 16v5h16v-5"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="13" rx="2"/><path d="M16 8V3H3v13h5"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="m12 3 8 3v6c0 4-5 8-8 10-3-2-8-6-8-10V6l8-3Z"/><path d="m8 12 3 3 5-6"/></symbol>
+    <symbol id="i-message" viewBox="0 0 24 24"><path d="M21 11a9 9 0 0 1-9 9H4l-3 2 2-7a9 9 0 1 1 18-4Z"/><path d="M7 9h10M7 13h6"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+  </svg>
+  <a class="skip" href="#conteudo">Pular para o conteúdo</a>
+  <header class="masthead">
+    <div class="shell masthead-inner">
+      <a class="brand" href="#abordagens" aria-label="Itaú Personnalité, início"><span class="itau">itaú</span><span class="personnalite">Personnalité</span></a>
+      <span class="workspace-label"><svg aria-hidden="true"><use href="#i-shield"/></svg> Espaço do gerente <span aria-hidden="true">/</span> Seguros</span>
+    </div>
+  </header>
+  <nav class="navigation" aria-label="Navegação principal">
+    <div class="shell nav-inner">
+      <div class="nav-links">
+        <a class="nav-link" href="#abordagens" id="nav-guides" aria-current="page"><svg aria-hidden="true"><use href="#i-guide"/></svg>Guia de abordagem</a>
+        <a class="nav-link" href="#clientes" id="nav-clients"><svg aria-hidden="true"><use href="#i-users"/></svg>Minha carteira</a>
+      </div>
+      <div class="base-control">
+        <span class="base-status" id="base-status" role="status">Base não carregada</span>
+        <button class="base-button" type="button" id="load-base" aria-label="Carregar base CSV" title="Carregar base CSV"><svg aria-hidden="true"><use href="#i-upload"/></svg><span id="load-base-label">Carregar base</span></button>
+        <input id="csv-file" type="file" accept=".csv,text/csv,text/plain" hidden>
+      </div>
+    </div>
+  </nav>
+  <main class="shell" id="conteudo" tabindex="-1">
+    <div class="base-error" id="base-error" role="alert" hidden></div>
+    <section id="page-guides" aria-labelledby="guides-title">
+      <div class="page-heading">
+        <div><p class="eyebrow">Relacionamento & proteção</p><h1 id="guides-title">Uma boa conversa começa aqui.</h1><p class="intro">Abordagens em seguros para cada modalidade de cliente.</p></div>
+        <span class="draft">Conteúdo inicial</span>
+      </div>
+      <div class="modalities" role="group" aria-label="Modalidade de atendimento">
+        <button class="modality" data-modality="BUILDER" aria-pressed="false">BUILDER</button>
+        <button class="modality" data-modality="HIGH" aria-pressed="true">HIGH</button>
+        <button class="modality" data-modality="MEDICOP" aria-pressed="false">MEDICOP</button>
+        <button class="modality" data-modality="PREMIUM" aria-pressed="false">PREMIUM</button>
+        <button class="modality" data-modality="SERVIDOR" aria-pressed="false">SERVIDOR</button>
+        <button class="modality" data-modality="SMART" aria-pressed="false">SMART</button>
+      </div>
+      <article class="guide" aria-labelledby="guide-title">
+        <div class="guide-main">
+          <p class="guide-code" id="guide-code">HIGH</p>
+          <h2 id="guide-title">Proteção à altura das suas conquistas.</h2>
+          <p class="guide-summary" id="guide-summary">Conecte a conversa à continuidade dos projetos e ao cuidado com quem importa.</p>
+          <p class="section-label">Para abrir a conversa</p>
+          <blockquote class="opening" id="guide-opening">“Você já construiu muita coisa. Podemos conversar sobre como proteger seus projetos e as pessoas que contam com você diante de um imprevisto?”</blockquote>
+          <button class="copy-button" id="copy-guide" type="button"><svg aria-hidden="true"><use href="#i-copy"/></svg>Copiar abordagem</button>
+          <div class="guide-bottom">
+            <div><h3>Explore a necessidade</h3><p id="guide-explore">Entenda quais compromissos, pessoas e projetos o cliente gostaria de proteger.</p></div>
+            <div><h3>Conduza o próximo passo</h3><p id="guide-next">Convide para revisar as proteções atuais e avaliar opções adequadas às necessidades identificadas.</p></div>
+          </div>
+        </div>
+        <aside class="guide-aside" aria-label="Perguntas para a conversa">
+          <div class="aside-title"><svg aria-hidden="true"><use href="#i-message"/></svg>Escute antes de oferecer</div>
+          <ol class="questions" id="guide-questions"><li>Quais projetos você quer preservar nos próximos anos?</li><li>Quem depende de você financeiramente hoje?</li><li>Quando você revisou seus seguros pela última vez?</li></ol>
+          <div class="next-step"><p>Leve a conversa para sua carteira.</p><a href="#clientes" class="text-link">Consultar meus clientes <svg aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+        </aside>
+      </article>
+      <p class="guide-footnote"><svg aria-hidden="true"><use href="#i-shield"/></svg>Roteiros iniciais para revisão. Confirme o contexto do cliente e as condições do seguro antes de apresentar uma proposta.</p>
+    </section>
+    <section id="page-clients" aria-labelledby="clients-title" hidden>
+      <div class="page-heading"><div><p class="eyebrow">Da conversa à ação</p><h1 id="clients-title">Sua carteira. Seu próximo contato.</h1><p class="intro">Informe sua funcional para consultar os clientes vinculados a você.</p></div></div>
+      <div class="access" id="access-panel">
+        <div>
+          <label class="field-label" for="functional">Sua funcional</label>
+          <form id="functional-form" class="functional-form">
+            <input id="functional" name="funcional" placeholder="Digite sua funcional" autocomplete="off" spellcheck="false" required maxlength="80" aria-describedby="functional-help functional-error">
+            <button class="primary" type="submit">Consultar <svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+          </form>
+          <p id="functional-help" class="field-help">Use a funcional exatamente como está na base.</p>
+          <p id="functional-error" class="error" role="alert" hidden></p>
+        </div>
+        <div class="access-side" id="base-help">
+          <h2>Conecte sua base de clientes.</h2>
+          <p id="base-help-text">Selecione o CSV da pasta para consultar sua carteira.</p>
+          <button class="text-link copy-button" type="button" id="load-base-secondary"><svg aria-hidden="true"><use href="#i-upload"/></svg>Selecionar CSV</button>
+        </div>
+      </div>
+      <div class="empty" id="initial-empty"><svg aria-hidden="true"><use href="#i-users"/></svg><h2>Seus clientes, no centro da conversa.</h2><p>A carteira aparecerá aqui após a consulta da sua funcional.</p></div>
+      <section id="portfolio" aria-label="Clientes da carteira" hidden>
+        <div class="portfolio-heading"><div><h2 id="portfolio-title">Clientes da sua carteira</h2><p class="portfolio-count" id="portfolio-count" role="status" aria-live="polite"></p></div><button class="secondary" type="button" id="change-functional">Trocar funcional</button></div>
+        <div class="filter-row" id="filters">
+          <div class="filter-search"><label for="client-search" class="field-label">Buscar cliente</label><svg aria-hidden="true"><use href="#i-search"/></svg><input type="search" id="client-search" placeholder="Nome ou CPF" autocomplete="off"></div>
+          <div class="filter-select"><label for="modality-filter" class="field-label">Modalidade</label><select id="modality-filter"><option value="">Todas as modalidades</option></select></div>
+        </div>
+        <div class="table-wrap" id="client-table-wrap"><table><caption class="sr-only">Clientes vinculados à funcional consultada</caption><thead><tr><th scope="col">Cliente</th><th scope="col">CPF</th><th scope="col">Modalidade</th><th scope="col">Contato</th><th scope="col"><span class="sr-only">Ações</span></th></tr></thead><tbody id="client-rows"></tbody></table></div>
+        <div class="empty" id="no-results" hidden><svg aria-hidden="true"><use href="#i-search"/></svg><h2 id="no-results-title">Nenhum cliente encontrado.</h2><p id="no-results-text"></p><button class="secondary" id="clear-filters" type="button">Limpar filtros</button></div>
+        <div class="pagination" id="pagination"><span id="page-info"></span><div class="pagination-controls"><button class="secondary" type="button" id="previous-page" aria-label="Página anterior">Anterior</button><button class="secondary" type="button" id="next-page" aria-label="Próxima página">Próxima</button></div></div>
+      </section>
+    </section>
+  </main>
+  <footer class="footer"><div class="shell footer-inner"><strong>PERSONNALITÉ <span aria-hidden="true">/</span> SEGUROS</strong><span>Material de apoio ao gerente · Uso interno</span></div></footer>
+  <dialog id="client-dialog" aria-labelledby="detail-title"><div class="dialog-head"><div><p class="eyebrow" id="detail-modality">Cliente</p><h2 id="detail-title">Detalhes do cliente</h2></div><button type="button" class="dialog-close" id="close-detail" aria-label="Fechar detalhes"><svg aria-hidden="true"><use href="#i-close"/></svg></button></div><div class="dialog-body"><dl class="client-fields" id="client-fields"></dl><div class="detail-actions"><button class="primary" type="button" id="detail-guide">Ver abordagem da modalidade <svg aria-hidden="true"><use href="#i-arrow"/></svg></button><p class="field-help" id="unknown-modality" hidden>Não há um roteiro para a modalidade informada nesta base.</p></div></div></dialog>
+  <div class="toast" id="toast" role="status" hidden></div>
+  <noscript><p class="shell">Ative o JavaScript no navegador para consultar a base e alternar as páginas.</p></noscript>
+  <script>
+    'use strict';
+    // CONFIGURAÇÃO: nome do CSV na mesma pasta do HTML. Preserve a extensão .csv.
+    const CONFIG = { csvFile: 'clientes.csv', pageSize: 15 };
+
+    // EDITE AQUI as argumentações. Cada modalidade usa a mesma estrutura.
+    const ARGUMENTACOES = {
+      BUILDER: {
+        title:'Construir o futuro também é protegê-lo.',
+        summary:'Comece pelos projetos em andamento e pelo que o cliente deseja conquistar.',
+        opening:'Você está construindo seus próximos passos. Como seus planos ficariam se um imprevisto mudasse sua rotina? Podemos pensar juntos em uma proteção que faça sentido para este momento?',
+        explore:'Descubra os planos prioritários e os compromissos que o cliente quer manter mesmo diante de um imprevisto.',
+        next:'Proponha uma conversa sobre proteção a partir dessas prioridades e do orçamento disponível.',
+        questions:['Qual é a sua principal conquista em construção?','Que compromissos você gostaria de manter em um imprevisto?','Você já tem alguma proteção para esse momento?']
+      },
+      HIGH: {
+        title:'Proteção à altura das suas conquistas.',
+        summary:'Conecte a conversa à continuidade dos projetos e ao cuidado com quem importa.',
+        opening:'Você já construiu muita coisa. Podemos conversar sobre como proteger seus projetos e as pessoas que contam com você diante de um imprevisto?',
+        explore:'Entenda quais compromissos, pessoas e projetos o cliente gostaria de proteger.',
+        next:'Convide para revisar as proteções atuais e avaliar opções adequadas às necessidades identificadas.',
+        questions:['Quais projetos você quer preservar nos próximos anos?','Quem depende de você financeiramente hoje?','Quando você revisou seus seguros pela última vez?']
+      },
+      MEDICOP: {
+        title:'Cuidar de quem cuida começa com escuta.',
+        summary:'Entenda a rotina profissional antes de conversar sobre proteção pessoal e familiar.',
+        opening:'Quero entender melhor sua rotina e o que é importante preservar nela. Se você precisasse se afastar por um tempo, quais compromissos mereceriam atenção? Podemos conversar sobre isso?',
+        explore:'Confirme a atividade do cliente, sua rotina e os impactos que um afastamento poderia trazer.',
+        next:'A partir do contexto confirmado, avalie as proteções existentes e as necessidades ainda não atendidas.',
+        questions:['Como está organizada sua rotina profissional?','Quais despesas continuariam se você precisasse parar?','Você conhece as condições das proteções que já possui?']
+      },
+      PREMIUM: {
+        title:'Mais cuidado com o que tem valor.',
+        summary:'Uma conversa personalizada sobre as pessoas, os bens e os planos do cliente.',
+        opening:'Seus planos e sua rotina mudam com o tempo. Suas proteções acompanharam essas mudanças? Gostaria de revisar com você o que faz sentido para o seu momento atual.',
+        explore:'Identifique mudanças recentes na vida do cliente e o que ele considera essencial proteger.',
+        next:'Combine uma revisão dos seguros atuais antes de apresentar possibilidades de contratação.',
+        questions:['O que mudou na sua vida desde a última revisão dos seguros?','O que você considera essencial proteger hoje?','Existe alguma proteção que você gostaria de entender melhor?']
+      },
+      SERVIDOR: {
+        title:'Tranquilidade para os planos de uma vida.',
+        summary:'Explore o planejamento familiar sem presumir que os benefícios atuais cobrem todas as necessidades.',
+        opening:'Além da sua rotina profissional, existem os planos da sua família. Você já parou para olhar como eles ficariam diante de um imprevisto? Podemos revisar juntos as proteções com que você conta hoje?',
+        explore:'Entenda os compromissos familiares e confirme quais benefícios e seguros o cliente já possui.',
+        next:'Verifique as condições das proteções existentes e converse sobre eventuais necessidades complementares.',
+        questions:['Quais planos familiares são prioridade hoje?','Quais benefícios e seguros você já possui?','Que despesas precisariam continuar sendo atendidas?']
+      },
+      SMART: {
+        title:'Proteção que faz sentido no dia a dia.',
+        summary:'Uma abordagem direta, com espaço para entender a prioridade do cliente.',
+        opening:'Posso fazer uma pergunta rápida? Se um imprevisto acontecesse hoje, o que você mais gostaria de ter protegido? A partir disso, podemos conversar sobre opções para sua rotina.',
+        explore:'Foque na principal preocupação trazida pelo cliente e explique as opções com linguagem simples.',
+        next:'Combine um próximo contato para apresentar coberturas, custos e condições de forma objetiva.',
+        questions:['O que você mais gostaria de proteger hoje?','Você já conta com algum seguro?','Qual é a melhor forma de continuarmos essa conversa?']
+      }
+    };
+    const $ = id => document.getElementById(id);
+    let activeModality = 'HIGH';
+    let toastTimer;
+    function notify(message) { $('toast').textContent=message; $('toast').hidden=false; clearTimeout(toastTimer); toastTimer=setTimeout(()=>$('toast').hidden=true,3500); }
+    function selectGuide(modality) {
+      if (!Object.hasOwn(ARGUMENTACOES,modality)) return;
+      activeModality=modality;
+      const guide=ARGUMENTACOES[modality];
+      $('guide-code').textContent=modality;
+      for(const [id,key] of [['guide-title','title'],['guide-summary','summary'],['guide-explore','explore'],['guide-next','next']]) $(id).textContent=guide[key];
+      $('guide-opening').textContent='“'+guide.opening+'”';
+      $('guide-questions').replaceChildren(...guide.questions.map(question=>{const li=document.createElement('li');li.textContent=question;return li;}));
+      document.querySelectorAll('[data-modality]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.modality===modality)));
+    }
+    function route() {
+      const clients=location.hash==='#clientes';
+      $('page-guides').hidden=clients; $('page-clients').hidden=!clients;
+      for(const [id,active] of [['nav-guides',!clients],['nav-clients',clients]]) { if(active) $(id).setAttribute('aria-current','page'); else $(id).removeAttribute('aria-current'); }
+      document.title=(clients?'Minha carteira':'Guia de abordagem')+' · Personnalité';
+    }
+    document.querySelectorAll('[data-modality]').forEach(button=>button.addEventListener('click',()=>selectGuide(button.dataset.modality)));
+    window.addEventListener('hashchange',route); route();
+    $('copy-guide').addEventListener('click',async()=>{
+      const text=ARGUMENTACOES[activeModality].opening;
+      try {
+        if(navigator.clipboard?.writeText) await navigator.clipboard.writeText(text);
+        else {const area=document.createElement('textarea');area.value=text;area.style.cssText='position:fixed;top:0;left:-9999px';document.body.append(area);area.select();const copied=document.execCommand('copy');area.remove();$('copy-guide').focus();if(!copied) throw new Error();}
+        notify('Abordagem copiada.');
+      } catch { notify('Não foi possível copiar. Selecione o texto da abordagem.'); }
+    });
+    // A base fica apenas na memória desta página. Nenhum dado é enviado a terceiros.
+    const state = { rows:[], headers:[], index:new Map(), loaded:false, fileName:'', functional:'', assigned:[], filtered:[], page:1, selected:null, loading:false };
+    const normalize = value => String(value??'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim().toLowerCase();
+    const headerKey = value => normalize(value).replace(/[\s-]+/g,'_');
+    // Identificadores permanecem como texto, inclusive zeros à esquerda.
+    const functionalKey = value => String(value??'').trim().toUpperCase();
+    const aliases = {
+      name:['nome','nome_cliente','nm_cliente','nm_clie','nm_cli','cliente','nome_completo'],
+      contact:['celular','telefone','telefone_cliente','fone','tel_celular','nr_celular','email','e_mail']
+    };
+    function valueFor(row,keys) { for(const key of keys) if(row[key]?.trim()) return row[key]; return ''; }
+    function nameFor(row) { return valueFor(row,aliases.name)||'Cliente sem nome informado'; }
+    function modalityFor(row) { return row.mod_atnd_ip?.trim().toUpperCase()||'Não informada'; }
+    function formatCPF(value) { const digits=String(value).replace(/\D/g,''); return digits.length===11?digits.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/,'$1.$2.$3-$4'):value||'Não informado'; }
+    function parseDelimited(text,delimiter) {
+      const records=[];
+      let fields=[],field='',quoted=false,closed=false,line=1,recordLine=1;
+      const addRecord=()=>{ fields.push(field); if(fields.some(value=>value.trim()!=='')) records.push({fields,line:recordLine}); fields=[];field='';closed=false; };
+      for(let i=0;i<text.length;i++) {
+        const character=text[i];
+        if(quoted) {
+          if(character==='"') { if(text[i+1]==='"') {field+='"';i++;} else {quoted=false;closed=true;} }
+          else {field+=character;if(character==='\n'||(character==='\r'&&text[i+1]!=='\n'))line++;}
+          continue;
+        }
+        if(character===delimiter) {fields.push(field);field='';closed=false;}
+        else if(character==='\n'||character==='\r') {addRecord();if(character==='\r'&&text[i+1]==='\n')i++;line++;recordLine=line;}
+        else if(character==='"') {if(field.trim()!==''||closed)throw new Error('Aspas fora de posição na linha '+line+'.');field='';quoted=true;}
+        else if(closed) {if(character!==' '&&character!=='\t')throw new Error('Conteúdo após as aspas na linha '+line+'.');}
+        else field+=character;
+      }
+      if(quoted) throw new Error('Aspas não fechadas na linha '+recordLine+'.');
+      if(field!==''||fields.length||closed) addRecord();
+      return records;
+    }
+    function parseCSV(source) {
+      let text=source.replace(/^\uFEFF/,'');
+      const separatorDirective=text.match(/^sep=([;,\t])\r?\n/i);
+      if(separatorDirective)text=text.slice(separatorDirective[0].length);
+      if(!text.trim())throw new Error('O arquivo está vazio.');
+      // Conta separadores apenas no cabeçalho, respeitando campos entre aspas.
+      const counts=new Map([[';',0],[',',0],['\t',0]]);
+      let quoted=false,started=false;
+      for(let i=0;i<text.length;i++) {
+        const ch=text[i];
+        if(ch==='"') {if(quoted&&text[i+1]==='"'){i++;continue;} quoted=!quoted;}
+        if(!quoted) {
+          if(ch==='\r'||ch==='\n'){if(started)break;else continue;}
+          if(counts.has(ch))counts.set(ch,counts.get(ch)+1);
+        }
+        if(ch.trim())started=true;
+      }
+      const delimiter=separatorDirective?.[1]||[...counts].sort((a,b)=>b[1]-a[1])[0][0];
+      const records=parseDelimited(text,delimiter);
+      if(!records.length)throw new Error('O arquivo não tem cabeçalho.');
+      const headers=records.shift().fields.map(label=>({key:headerKey(label),label:label.trim()}));
+      if(headers.some(header=>!header.key))throw new Error('Há uma coluna sem nome no cabeçalho.');
+      if(new Set(headers.map(header=>header.key)).size!==headers.length)throw new Error('Há nomes de colunas repetidos no cabeçalho.');
+      const keys=headers.map(header=>header.key);
+      const missing=['cpf','funcional'].filter(key=>!keys.includes(key));
+      if(missing.length)throw new Error('Colunas obrigatórias ausentes: '+missing.join(', ')+'.');
+      const rows=[];let unassigned=0;
+      for(const record of records) {
+        if(record.fields.length!==headers.length)throw new Error('A linha '+record.line+' tem '+record.fields.length+' campos; o cabeçalho tem '+headers.length+'. Confira o separador e as aspas.');
+        const row=Object.create(null);
+        headers.forEach((header,index)=>row[header.key]=record.fields[index].trim());
+        if(!row.funcional){unassigned++;continue;}
+        if(!row.cpf)throw new Error('O CPF está vazio na linha '+record.line+'.');
+        rows.push(row);
+      }
+      return {headers,rows,unassigned};
+    }
+    function decodeCSV(buffer) {
+      const bytes=new Uint8Array(buffer);
+      if(bytes[0]===0xff&&bytes[1]===0xfe)return new TextDecoder('utf-16le').decode(bytes);
+      if(bytes[0]===0xfe&&bytes[1]===0xff)return new TextDecoder('utf-16be').decode(bytes);
+      try{return new TextDecoder('utf-8',{fatal:true}).decode(bytes);}catch{return new TextDecoder('windows-1252').decode(bytes);}
+    }
+    function resetPortfolio() {
+      state.functional='';state.assigned=[];state.filtered=[];state.page=1;state.selected=null;
+      $('portfolio').hidden=true;$('initial-empty').hidden=false;$('access-panel').hidden=false;
+      $('client-search').value='';$('modality-filter').value='';$('client-rows').replaceChildren();
+      $('functional-error').hidden=true;$('functional').removeAttribute('aria-invalid');
+      if($('client-dialog').open)$('client-dialog').close();
+    }
+    function importCSV(source,fileName) {
+      const parsed=parseCSV(source); // Valida antes de substituir uma base já carregada.
+      const index=new Map();
+      parsed.rows.forEach(row=>{const key=functionalKey(row.funcional);if(!index.has(key))index.set(key,[]);index.get(key).push(row);});
+      resetPortfolio();
+      state.rows=parsed.rows;state.headers=parsed.headers;state.index=index;state.loaded=true;state.fileName=fileName;
+      $('base-status').textContent=fileName+' · '+parsed.rows.length.toLocaleString('pt-BR')+' registros';
+      $('base-status').title=$('base-status').textContent;
+      $('load-base-label').textContent='Trocar base';$('load-base').setAttribute('aria-label','Trocar base CSV');
+      $('base-help').hidden=true;$('base-error').hidden=true;
+      if(parsed.unassigned) { $('base-error').textContent=parsed.unassigned.toLocaleString('pt-BR')+' registro(s) sem funcional não foram associados a uma carteira.';$('base-error').hidden=false; }
+      return parsed;
+    }
+    function showLoadError(message) { $('base-error').textContent=message+(state.loaded?' A base anterior foi mantida.':'');$('base-error').hidden=false; }
+    async function loadFile(file) {
+      if(!file||state.loading)return;
+      state.loading=true;$('load-base').disabled=true;$('load-base-secondary').disabled=true;
+      $('base-status').textContent='Carregando base…';
+      try { await new Promise(resolve=>setTimeout(resolve,0));importCSV(decodeCSV(await file.arrayBuffer()),file.name);notify('Base carregada. Consulte sua funcional.'); }
+      catch(error) {showLoadError('Não foi possível carregar o CSV. '+error.message);$('base-status').textContent=state.loaded?state.fileName:'Base não carregada';}
+      finally {state.loading=false;$('load-base').disabled=false;$('load-base-secondary').disabled=false;$('csv-file').value='';}
+    }
+    function selectFile() { $('csv-file').click(); }
+    $('load-base').addEventListener('click',selectFile);
+    $('load-base-secondary').addEventListener('click',selectFile);
+    $('csv-file').addEventListener('change',event=>loadFile(event.target.files[0]));
+
+    function consultFunctional(rawFunctional) {
+      const key=functionalKey(rawFunctional);
+      if(!key)throw new Error('Informe sua funcional.');
+      if(state.loading)throw new Error('Aguarde o carregamento da base.');
+      if(!state.loaded)throw new Error('Carregue o CSV para consultar sua carteira.');
+      state.functional=key;state.assigned=state.index.get(key)||[];state.page=1;
+      $('functional-error').hidden=true;$('functional').removeAttribute('aria-invalid');
+      $('initial-empty').hidden=true;$('portfolio').hidden=false;$('access-panel').hidden=true;
+      $('portfolio-title').textContent='Carteira · Funcional '+String(rawFunctional).trim();
+      $('client-search').value='';$('modality-filter').replaceChildren(new Option('Todas as modalidades',''));
+      [...new Set(state.assigned.map(modalityFor))].sort((a,b)=>a.localeCompare(b,'pt-BR')).forEach(modality=>$('modality-filter').append(new Option(modality,modality)));
+      $('filters').hidden=state.assigned.length===0;
+      applyFilters();
+      return state.assigned.length;
+    }
+    $('functional-form').addEventListener('submit',event=>{
+      event.preventDefault();
+      try{consultFunctional($('functional').value);$('change-functional').focus();}
+      catch(error){$('functional-error').textContent=error.message;$('functional-error').hidden=false;if(!functionalKey($('functional').value))$('functional').setAttribute('aria-invalid','true');}
+    });
+    $('change-functional').addEventListener('click',()=>{resetPortfolio();$('functional').value='';$('functional').focus();});
+    function applyFilters() {
+      const search=normalize($('client-search').value), digits=search.replace(/\D/g,'');
+      const cpfSearch=digits.length>0&&/^[\d.\s-]+$/.test(search);
+      const modality=$('modality-filter').value;
+      state.filtered=state.assigned.filter(row=>(!modality||modalityFor(row)===modality)&&(!search||normalize(nameFor(row)).includes(search)||(cpfSearch&&row.cpf.replace(/\D/g,'').includes(digits))));
+      state.page=1;renderClients();
+    }
+    $('client-search').addEventListener('input',applyFilters);
+    $('modality-filter').addEventListener('change',applyFilters);
+    $('clear-filters').addEventListener('click',()=>{$('client-search').value='';$('modality-filter').value='';applyFilters();$('client-search').focus();});
+    function renderClients() {
+      const total=state.filtered.length,assigned=state.assigned.length,start=(state.page-1)*CONFIG.pageSize,end=Math.min(start+CONFIG.pageSize,total);
+      $('portfolio-count').textContent=total.toLocaleString('pt-BR')+' de '+assigned.toLocaleString('pt-BR')+' registros'+(total===assigned?' na sua carteira':' encontrados');
+      const fragment=document.createDocumentFragment();
+      for(let i=start;i<end;i++) {
+        const row=state.filtered[i],tr=document.createElement('tr');
+        for(const [text,className] of [[nameFor(row),''],[formatCPF(row.cpf),'cpf'],[modalityFor(row),''],[valueFor(row,aliases.contact)||'Não informado','contact-cell']]) {
+          const td=document.createElement('td');td.className=className;
+          if(tr.children.length===2){const label=document.createElement('span');label.className='modality-label';label.textContent=text;td.append(label);}else td.textContent=text;
+          tr.append(td);
+        }
+        const td=document.createElement('td'),button=document.createElement('button');button.type='button';button.className='row-action';button.textContent='Ver cliente';button.setAttribute('aria-label','Ver detalhes de '+nameFor(row)+', CPF '+formatCPF(row.cpf));
+        const arrow=document.createElementNS('http://www.w3.org/2000/svg','svg');arrow.setAttribute('aria-hidden','true');const use=document.createElementNS('http://www.w3.org/2000/svg','use');use.setAttribute('href','#i-arrow');arrow.append(use);button.append(arrow);
+        button.addEventListener('click',()=>openClient(row));td.append(button);tr.append(td);fragment.append(tr);
+      }
+      $('client-rows').replaceChildren(fragment);
+      $('client-table-wrap').hidden=total===0;$('pagination').hidden=total===0;$('no-results').hidden=total!==0;
+      $('no-results-title').textContent=assigned?'Nenhum cliente com esses filtros.':'Nenhum cliente vinculado a esta funcional.';
+      $('no-results-text').textContent=assigned?'Tente outro nome, CPF ou modalidade.':'Confira a funcional informada e os vínculos no CSV carregado.';
+      $('clear-filters').hidden=assigned===0;
+      $('page-info').textContent=total?`${start+1}–${end} de ${total.toLocaleString('pt-BR')} · Página ${state.page} de ${Math.ceil(total/CONFIG.pageSize)}`:'';
+      $('previous-page').disabled=state.page===1;$('next-page').disabled=end>=total;
+    }
+    $('previous-page').addEventListener('click',()=>{if(state.page>1){state.page--;renderClients();}});
+    $('next-page').addEventListener('click',()=>{if(state.page*CONFIG.pageSize<state.filtered.length){state.page++;renderClients();}});
+    const fieldLabels={cpf:'CPF',funcional:'Funcional',mod_atnd_ip:'Modalidade',nome:'Nome',nome_cliente:'Nome do cliente',nm_cliente:'Nome do cliente',email:'E-mail',e_mail:'E-mail',telefone:'Telefone',celular:'Celular'};
+    function openClient(row) {
+      state.selected=row;
+      $('detail-title').textContent=nameFor(row);$('detail-modality').textContent=modalityFor(row);
+      $('client-fields').replaceChildren(...state.headers.map(header=>{
+        const group=document.createElement('div'),label=document.createElement('dt'),value=document.createElement('dd');
+        label.textContent=Object.hasOwn(fieldLabels,header.key)?fieldLabels[header.key]:header.label;value.textContent=header.key==='cpf'?formatCPF(row[header.key]):row[header.key]||'Não informado';group.append(label,value);return group;
+      }));
+      const hasGuide=Object.hasOwn(ARGUMENTACOES,modalityFor(row));$('detail-guide').hidden=!hasGuide;$('unknown-modality').hidden=hasGuide;
+      $('client-dialog').showModal();
+    }
+    $('close-detail').addEventListener('click',()=>$('client-dialog').close());
+    $('client-dialog').addEventListener('click',event=>{const bounds=$('client-dialog').getBoundingClientRect();if(event.target===$('client-dialog')&&(event.clientX<bounds.left||event.clientX>bounds.right||event.clientY<bounds.top||event.clientY>bounds.bottom))$('client-dialog').close();});
+    $('detail-guide').addEventListener('click',()=>{if(!state.selected)return;selectGuide(modalityFor(state.selected));$('client-dialog').close();location.hash='abordagens';route();document.querySelector('[data-modality="'+activeModality+'"]').focus();});
+
+    async function loadAdjacentCSV() {
+      if(location.protocol==='file:')return; // Navegadores bloqueiam a leitura automática entre arquivos locais.
+      state.loading=true;$('load-base').disabled=true;$('load-base-secondary').disabled=true;$('base-status').textContent='Buscando base…';
+      const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),8000);
+      try {
+        const response=await fetch(new URL(CONFIG.csvFile,location.href),{cache:'no-store',signal:controller.signal});
+        if(response.status===404)return;
+        if(!response.ok)throw new Error('O servidor não conseguiu abrir '+CONFIG.csvFile+'.');
+        if((response.headers.get('content-type')||'').includes('text/html'))throw new Error('O endereço do CSV retornou uma página HTML.');
+        importCSV(decodeCSV(await response.arrayBuffer()),CONFIG.csvFile);
+      } catch(error) {showLoadError(error.name==='AbortError'?'A leitura automática demorou demais. Selecione o CSV em Carregar base.':'Não foi possível ler a base automaticamente. '+error.message+' Use Carregar base.');}
+      finally {clearTimeout(timeout);state.loading=false;$('load-base').disabled=false;$('load-base-secondary').disabled=false;if(!state.loaded)$('base-status').textContent='Base não carregada';}
+    }
+    loadAdjacentCSV();
+  </script>
+</body>
+</html>
